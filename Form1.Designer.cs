@@ -1,6 +1,6 @@
 ﻿namespace EncryptPDFs
 {
-    partial class Form1
+    partial class EncryptPDFsApp
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncryptPDFsApp));
             label1 = new Label();
             label2 = new Label();
             pdfBrowseBtn = new Button();
@@ -125,7 +126,7 @@
             userPasswordBox.Size = new Size(186, 27);
             userPasswordBox.TabIndex = 8;
             // 
-            // Form1
+            // EncryptPDFsApp
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -139,9 +140,10 @@
             Controls.Add(pdfBrowseBtn);
             Controls.Add(label2);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(497, 291);
             MinimumSize = new Size(497, 291);
-            Name = "Form1";
+            Name = "EncryptPDFsApp";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "EncryptPDFs";
             Load += Form1_Load;

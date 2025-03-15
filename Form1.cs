@@ -5,12 +5,12 @@ using iText.Layout;
 
 namespace EncryptPDFs
 {
-    public partial class Form1 : Form
+    public partial class EncryptPDFsApp : Form
     {
         private List<string> pdfFiles = new List<string>();
         private int numOfPdfsToEncrypt = 0;
         private string targetFolder = string.Empty;
-        public Form1()
+        public EncryptPDFsApp()
         {
             InitializeComponent();
         }
