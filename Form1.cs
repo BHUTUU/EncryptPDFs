@@ -10,6 +10,7 @@ namespace EncryptPDFs
         public EncryptPDFsApp()
         {
             InitializeComponent();
+            hideProgressBar();
         }
         private void progressbarValue(int val)
         {
