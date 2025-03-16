@@ -1,7 +1,4 @@
-using iText;
-using iText.Forms.Form.Element;
 using iText.Kernel.Pdf;
-using iText.Layout;
 
 namespace EncryptPDFs
 {
@@ -14,7 +11,14 @@ namespace EncryptPDFs
         {
             InitializeComponent();
         }
-
+        private void progressbarValue(int val)
+        {
+            progressBar1.Value = val;
+            ppLabel.Text = val.ToString() +"%";
+        }
+        private void showProgressBar() { progressBar1.Visible = true; ppLabel.Visible = true; }
+        private void hideProgressBar() { progressBar1.Visible=false; ppLabel.Visible = false; }
+        private void resetProgressBar() { progressBar1.Value=0; ppLabel.Text = "0%"; }
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -34,11 +38,10 @@ namespace EncryptPDFs
                     pdfFiles.Clear();
                     pdfFiles.AddRange(openFileDialog.FileNames);
                     MessageBox.Show("Selected PDFs: " + string.Join(", ", pdfFiles));
-                    numOfPdfsToEncrypt = pdfFiles.Count;
                 }
             }
         }
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
             string ownerPass = ownerPasswordBox.Text;
             string userPass = userPasswordBox.Text;
@@ -63,30 +66,52 @@ namespace EncryptPDFs
                 MessageBox.Show("Please select pdf(s) to be encrypted!", "Input Error");
                 return;
             }
-            foreach (string f in pdfFiles)
+            numOfPdfsToEncrypt=pdfFiles.Count;
+            showProgressBar();
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = 100;
+            progressBar1.Step = (int) (100/ (double) pdfFiles.Count);
+            progressbarValue(0);
+            int percentCompleted = 0;
+            int count = 0;
+            await Task.Run(() =>
             {
-                try
+                foreach (string f in pdfFiles)
                 {
-                    encrptThisPdf(f, targetFolder, userPass, ownerPass);
-                } catch(Exception ex) 
-                {
-                    MessageBox.Show($"PDF encryption Error Message: {ex.Message}", "Error");
-                    if(numOfPdfsToEncrypt > 0) {
-                        DialogResult userWant = MessageBox.Show("Do you want to proceed for rest of the pdfs? ", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if(userWant != DialogResult.Yes)
-                        {
-                            return;
+                    try
+                    {
+                        encrptThisPdf(f, targetFolder, userPass, ownerPass);
+                    } catch(Exception ex) 
+                    {
+                        numOfPdfsToEncrypt++;
+                        MessageBox.Show($"PDF encryption Error Message: {ex.Message}", "Error");
+                        if(numOfPdfsToEncrypt > 0) {
+                            DialogResult userWant = MessageBox.Show("Do you want to proceed for rest of the pdfs? ", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if(userWant != DialogResult.Yes)
+                            {
+                                return;
+                            }
                         }
+                    } finally
+                    {
+                        numOfPdfsToEncrypt--;
+                        count++;
+                        this.Invoke((Action)(() =>
+                        {
+                        percentCompleted = (int) ((count / (double)pdfFiles.Count)*100);
+                        progressbarValue(percentCompleted);
+                        }));
                     }
-                } finally
-                {
-                    numOfPdfsToEncrypt--;
                 }
-            }
+            });
+            count = 0;
+            percentCompleted = 0;
+            hideProgressBar();
+            resetProgressBar();
             int totalPdfsToBeEncrypted = pdfFiles.Count;
             int numberOfPdfsEncrypted = totalPdfsToBeEncrypted - numOfPdfsToEncrypt;
-            numberOfPdfsEncrypted=pdfFiles.Count; //setting it back to original as if user re run the program.
             MessageBox.Show($"Encryption successful for ({numberOfPdfsEncrypted}/{totalPdfsToBeEncrypted}) files!", "Success");
+            numberOfPdfsEncrypted=pdfFiles.Count; //setting it back to original as if user re run the program.
         }
         private void label4_Click(object sender, EventArgs e)
         {

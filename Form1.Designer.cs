@@ -38,6 +38,8 @@
             label4 = new Label();
             ownerPasswordBox = new TextBox();
             userPasswordBox = new TextBox();
+            progressBar1 = new ProgressBar();
+            ppLabel = new Label();
             SuspendLayout();
             // 
             // label1
@@ -126,11 +128,29 @@
             userPasswordBox.Size = new Size(186, 27);
             userPasswordBox.TabIndex = 8;
             // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(16, 180);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(446, 10);
+            progressBar1.TabIndex = 9;
+            // 
+            // ppLabel
+            // 
+            ppLabel.AutoSize = true;
+            ppLabel.Location = new Point(412, 204);
+            ppLabel.Name = "ppLabel";
+            ppLabel.Size = new Size(29, 20);
+            ppLabel.TabIndex = 10;
+            ppLabel.Text = "0%";
+            // 
             // EncryptPDFsApp
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(479, 244);
+            Controls.Add(ppLabel);
+            Controls.Add(progressBar1);
             Controls.Add(userPasswordBox);
             Controls.Add(ownerPasswordBox);
             Controls.Add(label4);
@@ -162,5 +182,7 @@
         private Label label4;
         private TextBox ownerPasswordBox;
         private TextBox userPasswordBox;
+        private ProgressBar progressBar1;
+        private Label ppLabel;
     }
 }
