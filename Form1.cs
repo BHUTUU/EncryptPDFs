@@ -53,8 +53,11 @@ namespace EncryptPDFs
             }
             if (userPass == string.Empty)
             {
-                MessageBox.Show("Please set the user password!", "Invalid Input");
-                return;
+                DialogResult userAccessAllowed = MessageBox.Show("Are you sure to continue without user password?", "User Access Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(userAccessAllowed != DialogResult.Yes) {
+                    MessageBox.Show("Please enter the user password and try again.");
+                    return;
+                }
             }
             if (targetFolder == string.Empty)
             {
