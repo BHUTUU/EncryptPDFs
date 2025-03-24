@@ -14,8 +14,8 @@ Compression=lzma2
 SolidCompression=yes
 UninstallDisplayIcon={app}\icon.ico
 SetupIconFile=..\icon.ico
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 
 [Files]
 ; Application Files
