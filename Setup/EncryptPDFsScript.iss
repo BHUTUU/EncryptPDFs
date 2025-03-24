@@ -4,7 +4,7 @@
 [Setup]
 ; Basic Setup Information
 AppName=EncryptPDFsSetup
-AppVersion=1.0.0
+AppVersion=1.0.1
 DefaultDirName={localappdata}\EncryptPDFsSetup
 DefaultGroupName=EncryptPDFsSetup
 OutputBaseFilename=EncryptPDFsSetup_Installer_x64
