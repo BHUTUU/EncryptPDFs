@@ -15,6 +15,8 @@ namespace EncryptPDFs
         {
             InitializeComponent();
             hideProgressBar();
+            filePrefixBox.Enabled = false;
+            fileSuffixBox.Enabled = false;
         }
         private void progressbarValue(int val)
         {
@@ -148,8 +150,14 @@ namespace EncryptPDFs
             numberOfPdfsEncrypted = pdfFiles.Count; //setting it back to original as if user re run the program.
             outputFilePrefixCheckbox.Enabled = true;
             outputFileSuffixCheckbox.Enabled = true;
-            filePrefixBox.Enabled = true;
-            fileSuffixBox.Enabled = true;
+            if(outputFileNamePrefixIsChecked)
+            {
+                filePrefixBox.Enabled = true;
+            }
+            if(outputFileNameSuffixIsChecked)
+            {
+                fileSuffixBox.Enabled = true;
+            }
         }
         private void label4_Click(object sender, EventArgs e)
         {
@@ -197,6 +205,7 @@ namespace EncryptPDFs
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             outputFileNameSuffixIsChecked = !outputFileNameSuffixIsChecked;
+            fileSuffixBox.Enabled = !fileSuffixBox.Enabled;
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -209,6 +218,7 @@ namespace EncryptPDFs
         private void outputFilePrefixCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             outputFileNamePrefixIsChecked = !outputFileNamePrefixIsChecked;
+            filePrefixBox.Enabled = !filePrefixBox.Enabled;
         }
     }
 }
