@@ -3,11 +3,11 @@
 
 [Setup]
 ; Basic Setup Information
-AppName=EncryptPDFsSetup
+AppName=EncryptPDFs
 AppVersion=1.0.2
 DefaultDirName={localappdata}\EncryptPDFsSetup
-DefaultGroupName=EncryptPDFsSetup
-OutputBaseFilename=EncryptPDFs_v1.0.2_x64_Setup.exe
+DefaultGroupName=EncryptPDFs
+OutputBaseFilename=EncryptPDFs_v1.0.2_x64_Setup
 OutputDir=.
 PrivilegesRequired=lowest
 Compression=lzma2
@@ -16,7 +16,8 @@ UninstallDisplayIcon={app}\icon.ico
 SetupIconFile=..\icon.ico
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
-
+UserInfoPage=yes
+LicenseFile=..\LICENSE.txt
 [Files]
 ; Application Files
 Source: "..\bin\Release\net8.0-windows\publish\win-x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
