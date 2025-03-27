@@ -38,7 +38,7 @@ To build EncryptPDFs from the source code:
 
 3. **Choose Output Folder**: Click the "Browse" button to select the folder where the encrypted PDFs will be saved.
 
-4. **Set Passwords**: Enter strong passwords for both owner and user to ensure encryption security. User password is optional if you are using version > v1.0.0.
+4. **Set Passwords**: Enter strong passwords for both owner and user to ensure encryption security. User password is optional if you are using version greater than v1.0.0.
 6. **Set Prefix or/and Suffix**: This an optional feature start from version v1.0.2 for adding prifix or/and suffix in the output, i.e., encrypted file name.
 7. **Start Encryption**: Click the "Encrypt" button to begin the encryption process. A progress bar will indicate the status of the operation.
 
