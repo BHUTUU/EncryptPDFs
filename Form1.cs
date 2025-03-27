@@ -7,6 +7,10 @@ namespace EncryptPDFs
         private List<string> pdfFiles = new List<string>();
         private int numOfPdfsToEncrypt = 0;
         private string targetFolder = string.Empty;
+        private bool outputFileNamePrefixIsChecked = false;
+        private bool outputFileNameSuffixIsChecked = false;
+        private string outputFilePrefixValue = string.Empty;
+        private string outputFileSuffixValue = string.Empty;
         public EncryptPDFsApp()
         {
             InitializeComponent();
@@ -15,11 +19,11 @@ namespace EncryptPDFs
         private void progressbarValue(int val)
         {
             progressBar1.Value = val;
-            ppLabel.Text = val.ToString() +"%";
+            ppLabel.Text = val.ToString() + "%";
         }
         private void showProgressBar() { progressBar1.Visible = true; ppLabel.Visible = true; }
-        private void hideProgressBar() { progressBar1.Visible=false; ppLabel.Visible = false; }
-        private void resetProgressBar() { progressBar1.Value=0; ppLabel.Text = "0%"; }
+        private void hideProgressBar() { progressBar1.Visible = false; ppLabel.Visible = false; }
+        private void resetProgressBar() { progressBar1.Value = 0; ppLabel.Text = "0%"; }
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -46,6 +50,28 @@ namespace EncryptPDFs
         {
             string ownerPass = ownerPasswordBox.Text;
             string userPass = userPasswordBox.Text;
+            outputFilePrefixValue = filePrefixBox.Text;
+            outputFileSuffixValue = fileSuffixBox.Text;
+            if (outputFileNamePrefixIsChecked == true)
+            {
+                if (outputFilePrefixValue.Length == 0)
+                {
+                    MessageBox.Show("Please provide prefix for the ouput file name or uncheck that option to continue without it.", "Invalid input");
+                    return;
+                }
+            }
+            if (outputFileNameSuffixIsChecked == true)
+            {
+                if (outputFileSuffixValue.Length == 0)
+                {
+                    MessageBox.Show("Please provide suffix for the output file name or uncheck that option to continue without it.", "Invalid input");
+                    return;
+                }
+            }
+            outputFilePrefixCheckbox.Enabled = false;
+            outputFileSuffixCheckbox.Enabled = false;
+            filePrefixBox.Enabled = false;
+            fileSuffixBox.Enabled = false;
             if (ownerPass == string.Empty)
             {
                 MessageBox.Show("Please set the owner password!", "Invalid Input");
@@ -54,7 +80,8 @@ namespace EncryptPDFs
             if (userPass == string.Empty)
             {
                 DialogResult userAccessAllowed = MessageBox.Show("Are you sure to continue without user password?", "User Access Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(userAccessAllowed != DialogResult.Yes) {
+                if (userAccessAllowed != DialogResult.Yes)
+                {
                     MessageBox.Show("Please enter the user password and try again.");
                     return;
                 }
@@ -70,11 +97,11 @@ namespace EncryptPDFs
                 MessageBox.Show("Please select pdf(s) to be encrypted!", "Input Error");
                 return;
             }
-            numOfPdfsToEncrypt=pdfFiles.Count;
+            numOfPdfsToEncrypt = pdfFiles.Count;
             showProgressBar();
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
-            progressBar1.Step = (int) (100/ (double) pdfFiles.Count);
+            progressBar1.Step = (int)(100 / (double)pdfFiles.Count);
             progressbarValue(0);
             int percentCompleted = 0;
             int count = 0;
@@ -85,25 +112,28 @@ namespace EncryptPDFs
                     try
                     {
                         encrptThisPdf(f, targetFolder, userPass, ownerPass);
-                    } catch(Exception ex) 
+                    }
+                    catch (Exception ex)
                     {
                         numOfPdfsToEncrypt++;
-                        MessageBox.Show($"PDF encryption Error Message: {ex.Message}", "Error");
-                        if(numOfPdfsToEncrypt > 0) {
+                        MessageBox.Show($"PDF encryption Error Message: {ex.Message} PDF path: {f}", "Error");
+                        if (numOfPdfsToEncrypt > 0)
+                        {
                             DialogResult userWant = MessageBox.Show("Do you want to proceed for rest of the pdfs? ", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                            if(userWant != DialogResult.Yes)
+                            if (userWant != DialogResult.Yes)
                             {
                                 return;
                             }
                         }
-                    } finally
+                    }
+                    finally
                     {
                         numOfPdfsToEncrypt--;
                         count++;
                         this.Invoke((Action)(() =>
                         {
-                        percentCompleted = (int) ((count / (double)pdfFiles.Count)*100);
-                        progressbarValue(percentCompleted);
+                            percentCompleted = (int)((count / (double)pdfFiles.Count) * 100);
+                            progressbarValue(percentCompleted);
                         }));
                     }
                 }
@@ -115,7 +145,11 @@ namespace EncryptPDFs
             int totalPdfsToBeEncrypted = pdfFiles.Count;
             int numberOfPdfsEncrypted = totalPdfsToBeEncrypted - numOfPdfsToEncrypt;
             MessageBox.Show($"Encryption successful for ({numberOfPdfsEncrypted}/{totalPdfsToBeEncrypted}) files!", "Success");
-            numberOfPdfsEncrypted=pdfFiles.Count; //setting it back to original as if user re run the program.
+            numberOfPdfsEncrypted = pdfFiles.Count; //setting it back to original as if user re run the program.
+            outputFilePrefixCheckbox.Enabled = true;
+            outputFileSuffixCheckbox.Enabled = true;
+            filePrefixBox.Enabled = true;
+            fileSuffixBox.Enabled = true;
         }
         private void label4_Click(object sender, EventArgs e)
         {
@@ -138,7 +172,16 @@ namespace EncryptPDFs
             {
                 Directory.CreateDirectory(outputPath);
             }
-            string outputFilePath = Path.Combine(outputPath, Path.GetFileName(fileName));
+            string outputFileName = Path.GetFileName(fileName);
+            if(outputFileNamePrefixIsChecked)
+            {
+                outputFileName = outputFilePrefixValue + outputFileName;
+            }
+            if(outputFileNameSuffixIsChecked)
+            {
+                outputFileName = outputFileName.Replace(".pdf", "") + outputFileSuffixValue + ".pdf";
+            }
+            string outputFilePath = Path.Combine(outputPath, outputFileName);
             WriterProperties writerProperties = new WriterProperties()
                 .SetStandardEncryption(
                     System.Text.Encoding.UTF8.GetBytes(userPass),
@@ -149,6 +192,23 @@ namespace EncryptPDFs
             using (PdfReader reader = new PdfReader(fileName))
             using (PdfWriter writer = new PdfWriter(outputFilePath, writerProperties))
             using (PdfDocument pdfDoc = new PdfDocument(reader, writer)) { }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            outputFileNameSuffixIsChecked = !outputFileNameSuffixIsChecked;
+        }
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void outputFilePrefixCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            outputFileNamePrefixIsChecked = !outputFileNamePrefixIsChecked;
         }
     }
 }

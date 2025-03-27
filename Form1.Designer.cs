@@ -40,28 +40,32 @@
             userPasswordBox = new TextBox();
             progressBar1 = new ProgressBar();
             ppLabel = new Label();
+            outputFilePrefixCheckbox = new CheckBox();
+            outputFileSuffixCheckbox = new CheckBox();
+            filePrefixBox = new TextBox();
+            fileSuffixBox = new TextBox();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 23);
             label1.Name = "label1";
-            label1.Size = new Size(301, 24);
+            label1.Size = new Size(301, 19);
             label1.TabIndex = 0;
-            label1.Text = "Choose the target PDF files to enrypt:";
+            label1.Text = "CHOOSE TARGET PDFs TO ENCRYPT:";
             label1.Click += label1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(12, 62);
             label2.Name = "label2";
-            label2.Size = new Size(281, 24);
+            label2.Size = new Size(305, 19);
             label2.TabIndex = 1;
-            label2.Text = "Choose the output folder for PDFs:";
+            label2.Text = "CHOOSE OUTPUT FOLDER FOR PDFs:";
             // 
             // pdfBrowseBtn
             // 
@@ -85,7 +89,7 @@
             // 
             // encryptBtn
             // 
-            encryptBtn.Location = new Point(192, 196);
+            encryptBtn.Location = new Point(192, 289);
             encryptBtn.Name = "encryptBtn";
             encryptBtn.Size = new Size(94, 36);
             encryptBtn.TabIndex = 4;
@@ -96,26 +100,27 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(12, 105);
             label3.Name = "label3";
-            label3.Size = new Size(259, 24);
+            label3.Size = new Size(212, 19);
             label3.TabIndex = 5;
-            label3.Text = "Set password for owner access:";
+            label3.Text = "SET OWNER PASSWORD:";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(12, 148);
             label4.Name = "label4";
-            label4.Size = new Size(245, 24);
+            label4.Size = new Size(194, 19);
             label4.TabIndex = 6;
-            label4.Text = "Set password for user access:";
+            label4.Text = "SET USER PASSWORD:";
             label4.Click += label4_Click;
             // 
             // ownerPasswordBox
             // 
+            ownerPasswordBox.Font = new Font("Arial", 10.2F);
             ownerPasswordBox.Location = new Point(277, 105);
             ownerPasswordBox.Name = "ownerPasswordBox";
             ownerPasswordBox.Size = new Size(186, 27);
@@ -123,6 +128,7 @@
             // 
             // userPasswordBox
             // 
+            userPasswordBox.Font = new Font("Arial", 10.2F);
             userPasswordBox.Location = new Point(277, 145);
             userPasswordBox.Name = "userPasswordBox";
             userPasswordBox.Size = new Size(186, 27);
@@ -130,7 +136,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(16, 180);
+            progressBar1.Location = new Point(16, 265);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(446, 10);
             progressBar1.TabIndex = 9;
@@ -138,17 +144,62 @@
             // ppLabel
             // 
             ppLabel.AutoSize = true;
-            ppLabel.Location = new Point(412, 204);
+            ppLabel.Location = new Point(410, 289);
             ppLabel.Name = "ppLabel";
             ppLabel.Size = new Size(29, 20);
             ppLabel.TabIndex = 10;
             ppLabel.Text = "0%";
             // 
+            // outputFilePrefixCheckbox
+            // 
+            outputFilePrefixCheckbox.AutoSize = true;
+            outputFilePrefixCheckbox.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            outputFilePrefixCheckbox.Location = new Point(17, 186);
+            outputFilePrefixCheckbox.Name = "outputFilePrefixCheckbox";
+            outputFilePrefixCheckbox.Size = new Size(254, 23);
+            outputFilePrefixCheckbox.TabIndex = 11;
+            outputFilePrefixCheckbox.Text = "OUTPUT FILE NAME PREFIX:";
+            outputFilePrefixCheckbox.UseVisualStyleBackColor = true;
+            outputFilePrefixCheckbox.CheckedChanged += outputFilePrefixCheckbox_CheckedChanged;
+            // 
+            // outputFileSuffixCheckbox
+            // 
+            outputFileSuffixCheckbox.AutoSize = true;
+            outputFileSuffixCheckbox.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            outputFileSuffixCheckbox.Location = new Point(17, 224);
+            outputFileSuffixCheckbox.Name = "outputFileSuffixCheckbox";
+            outputFileSuffixCheckbox.Size = new Size(253, 23);
+            outputFileSuffixCheckbox.TabIndex = 12;
+            outputFileSuffixCheckbox.Text = "OUTPUT FILE NAME SUFFIX:";
+            outputFileSuffixCheckbox.UseVisualStyleBackColor = true;
+            outputFileSuffixCheckbox.CheckedChanged += checkBox2_CheckedChanged;
+            // 
+            // filePrefixBox
+            // 
+            filePrefixBox.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            filePrefixBox.Location = new Point(277, 183);
+            filePrefixBox.Name = "filePrefixBox";
+            filePrefixBox.Size = new Size(186, 27);
+            filePrefixBox.TabIndex = 13;
+            // 
+            // fileSuffixBox
+            // 
+            fileSuffixBox.Font = new Font("Arial", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            fileSuffixBox.Location = new Point(278, 221);
+            fileSuffixBox.Name = "fileSuffixBox";
+            fileSuffixBox.Size = new Size(186, 27);
+            fileSuffixBox.TabIndex = 14;
+            fileSuffixBox.TextChanged += textBox2_TextChanged;
+            // 
             // EncryptPDFsApp
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(479, 244);
+            ClientSize = new Size(479, 337);
+            Controls.Add(fileSuffixBox);
+            Controls.Add(filePrefixBox);
+            Controls.Add(outputFileSuffixCheckbox);
+            Controls.Add(outputFilePrefixCheckbox);
             Controls.Add(ppLabel);
             Controls.Add(progressBar1);
             Controls.Add(userPasswordBox);
@@ -161,7 +212,6 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximumSize = new Size(497, 291);
             MinimumSize = new Size(497, 291);
             Name = "EncryptPDFsApp";
             StartPosition = FormStartPosition.CenterScreen;
@@ -184,5 +234,9 @@
         private TextBox userPasswordBox;
         private ProgressBar progressBar1;
         private Label ppLabel;
+        private CheckBox outputFilePrefixCheckbox;
+        private CheckBox outputFileSuffixCheckbox;
+        private TextBox filePrefixBox;
+        private TextBox fileSuffixBox;
     }
 }
