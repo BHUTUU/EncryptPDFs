@@ -4,10 +4,10 @@
 [Setup]
 ; Basic Setup Information
 AppName=EncryptPDFsSetup
-AppVersion=1.0.1
+AppVersion=1.0.2
 DefaultDirName={localappdata}\EncryptPDFsSetup
 DefaultGroupName=EncryptPDFsSetup
-OutputBaseFilename=EncryptPDFsSetup_Installer_x64
+OutputBaseFilename=EncryptPDFs_v1.0.2_x64_Setup.exe
 OutputDir=.
 PrivilegesRequired=lowest
 Compression=lzma2

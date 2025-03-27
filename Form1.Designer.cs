@@ -195,7 +195,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(479, 337);
+            ClientSize = new Size(479, 338);
             Controls.Add(fileSuffixBox);
             Controls.Add(filePrefixBox);
             Controls.Add(outputFileSuffixCheckbox);
@@ -212,7 +212,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(497, 291);
+            MaximizeBox = false;
+            MaximumSize = new Size(497, 385);
+            MinimumSize = new Size(497, 385);
             Name = "EncryptPDFsApp";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "EncryptPDFs";

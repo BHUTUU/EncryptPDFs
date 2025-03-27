@@ -54,6 +54,21 @@ namespace EncryptPDFs
             string userPass = userPasswordBox.Text;
             outputFilePrefixValue = filePrefixBox.Text;
             outputFileSuffixValue = fileSuffixBox.Text;
+            if (pdfFiles.Count == 0)
+            {
+                MessageBox.Show("Please select pdf(s) to be encrypted!", "Input Error");
+                return;
+            }
+            if (targetFolder == string.Empty)
+            {
+                MessageBox.Show("Please select a folder for the output of the encrypted files!", "Output Error");
+                return;
+            }
+            if (ownerPass == string.Empty)
+            {
+                MessageBox.Show("Please set the owner password!", "Invalid Input");
+                return;
+            }
             if (outputFileNamePrefixIsChecked == true)
             {
                 if (outputFilePrefixValue.Length == 0)
@@ -74,11 +89,6 @@ namespace EncryptPDFs
             outputFileSuffixCheckbox.Enabled = false;
             filePrefixBox.Enabled = false;
             fileSuffixBox.Enabled = false;
-            if (ownerPass == string.Empty)
-            {
-                MessageBox.Show("Please set the owner password!", "Invalid Input");
-                return;
-            }
             if (userPass == string.Empty)
             {
                 DialogResult userAccessAllowed = MessageBox.Show("Are you sure to continue without user password?", "User Access Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -87,17 +97,6 @@ namespace EncryptPDFs
                     MessageBox.Show("Please enter the user password and try again.");
                     return;
                 }
-            }
-            if (targetFolder == string.Empty)
-            {
-                MessageBox.Show("Please select a folder for the output of the encrypted files!", "Output Error");
-                return;
-
-            }
-            if (pdfFiles.Count == 0)
-            {
-                MessageBox.Show("Please select pdf(s) to be encrypted!", "Input Error");
-                return;
             }
             numOfPdfsToEncrypt = pdfFiles.Count;
             showProgressBar();
